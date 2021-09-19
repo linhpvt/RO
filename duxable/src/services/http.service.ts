@@ -7,9 +7,7 @@ import {
   setHttpSuccess,
 } from '../features/http/http.creators';
 
-const BASE_ENPOINT = 'https://random-data-api.com';
-
-//https://random-data-api.com/api/food/random_food
+const BASE_ENPOINT = 'http://localhost:8081';
 
 export interface MessageError {
   code?: number;
@@ -38,7 +36,7 @@ export function post<T>(url: string) {
     ajax<ApiResp<T>>({
       url: `${BASE_ENPOINT}${url}`,
       method: 'POST',
-      body: action.payload,
+      body: { ...action.payload, id: action.payload.id || Date.now() },
       headers: {},
     }).pipe(
       map((result) => buildHttpResp<T>(result)),
@@ -61,6 +59,27 @@ export function getById<R>(url: string): any {
 }
 
 export function getByOne<R>(url: string): any {
+  return (action: any) => {
+    setHttpInProgress();
+    return ajax<ApiResp<R>>({
+      url: `${BASE_ENPOINT}${url}`,
+      method: 'GET',
+      headers: {},
+    }).pipe(
+      map((result) => {
+        setHttpSuccess();
+        return buildHttpResp<R>(result);
+      }),
+      // @ts-ignore
+      catchError((err: any) => {
+        setHttpFailed();
+        return of(buildHttpError(err));
+      }),
+    );
+  };
+}
+
+export function getAll<R>(url: string): any {
   return (action: any) => {
     setHttpInProgress();
     return ajax<ApiResp<R>>({

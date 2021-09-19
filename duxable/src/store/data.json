@@ -160,5 +160,49 @@
       "prefix": "Msgr.",
       "initials": "LCE"
     }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "name": "first task",
+      "description": "Do something before start",
+      "status": "idea"
+    },
+    {
+      "id": 2,
+      "name": "second task",
+      "description": "Do something before in-progress",
+      "status": "in-progress"
+    },
+    {
+      "id": 3,
+      "name": "third task",
+      "description": "Do something before complete",
+      "status": "complete"
+    },
+    {
+      "id": 4,
+      "name": "fouth task",
+      "description": "Do something before accept",
+      "status": "accept"
+    },
+    {
+      "id": 5,
+      "name": "firth task",
+      "description": "Do something before go-live",
+      "status": "go-live"
+    },
+    {
+      "name": "Home",
+      "description": "Do something before start",
+      "status": "idea",
+      "id": 1632057894950
+    },
+    {
+      "name": "Home",
+      "description": "Do something before start",
+      "status": "idea",
+      "id": 1632061605306
+    }
   ]
 }

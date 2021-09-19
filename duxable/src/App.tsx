@@ -10,7 +10,14 @@ function App() {
   const dispatch = useDispatch<TodoAction>();
   useEffect(() => {
     // @ts-ignore
-    dispatch({ type: TodoEnum.TODO_ADD, payload: { a: 10 } });
+    dispatch({
+      type: TodoEnum.TODO_ADD,
+      payload: {
+        name: 'Home',
+        description: 'Do something before start',
+        status: 'idea',
+      },
+    });
   }, [dispatch]);
   return (
     <div className='App'>
