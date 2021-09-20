@@ -27,8 +27,15 @@ if (ENV !== 'production' && module.hot) {
 }
 
 // define some of interested piece of data in store
-export interface StateType {
+// it's used to add access token and authorization headers
+export interface AccessAuthType {
   user: any;
+}
+
+// represent an action to store
+export interface AppAction<T> {
+  type: string;
+  payload?: T;
 }
 
 export default store;

@@ -1,7 +1,4 @@
-export interface TodoAction {
-  type: string;
-  payload?: any;
-}
+import { AppAction } from '../../../store';
 const NAMESPACE = 'TODO';
 export const TodoEnum = {
   ADD: `${NAMESPACE}/ADD`,
@@ -18,7 +15,7 @@ const todoInitialState = {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state: any = todoInitialState, action: TodoAction) => {
+export default (state: any = todoInitialState, action: AppAction<any>) => {
   switch (action.type) {
     case TodoEnum.ADD_SUCCESS:
       return { ...state, item: action.payload };

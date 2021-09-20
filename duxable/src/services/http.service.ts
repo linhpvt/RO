@@ -1,5 +1,5 @@
-import { StateObservable } from 'redux-observable';
-import { catchError, map, of } from 'rxjs';
+import { ofType, StateObservable } from 'redux-observable';
+import { catchError, map, of, takeUntil, Observable } from 'rxjs';
 import { AjaxResponse } from 'rxjs/ajax';
 import { ajax } from 'rxjs/ajax';
 import {
@@ -7,7 +7,8 @@ import {
   setHttpInProgress,
   setHttpSuccess,
 } from '../features/http/http.creators';
-import { StateType } from '../store';
+import { HttpEnum } from '../features/http/http.reducer';
+import { AppAction, AccessAuthType } from '../store';
 
 const BASE_ENPOINT = 'http://localhost:8081';
 
@@ -61,12 +62,13 @@ function endFailed(options: HttpOptions) {
     setHttpFailed();
   }
 }
-function buildHeaders(state: StateObservable<StateType>): any {
+function buildHeaders(state: StateObservable<AccessAuthType>): any {
   return {};
 }
 export function post<T>(
   url: string,
-  state: StateObservable<StateType>,
+  action$: Observable<AppAction<any>>,
+  state: StateObservable<AccessAuthType>,
   options: HttpOptions = { showSpinner: true },
 ) {
   return (action: any) => {
@@ -83,6 +85,9 @@ export function post<T>(
         endSuccess(options);
         return buildHttpResp<T>(result);
       }),
+      // cancel current http request
+      takeUntil(action$.pipe(ofType(HttpEnum.CANCEL))),
+
       // @ts-ignore
       catchError((err: any) => {
         // set status to failed
@@ -95,7 +100,8 @@ export function post<T>(
 
 export function getById<R>(
   url: string,
-  state: StateObservable<StateType>,
+  action$: Observable<AppAction<any>>,
+  state: StateObservable<AccessAuthType>,
   options: HttpOptions,
 ): any {
   return (action: any) => {
@@ -109,6 +115,8 @@ export function getById<R>(
         endSuccess(options);
         return buildHttpResp<R>(result);
       }),
+      // cancel current request
+      takeUntil(action$.pipe(ofType(HttpEnum.CANCEL))),
       // @ts-ignore
       catchError((err: any) => {
         endFailed(options);
@@ -120,7 +128,8 @@ export function getById<R>(
 
 export function getByOne<R>(
   url: string,
-  state: StateObservable<StateType>,
+  action$: Observable<AppAction<any>>,
+  state: StateObservable<AccessAuthType>,
   options: HttpOptions,
 ): any {
   return (action: any) => {
@@ -134,6 +143,7 @@ export function getByOne<R>(
         endSuccess(options);
         return buildHttpResp<R>(result);
       }),
+      takeUntil(action$.pipe(ofType(HttpEnum.CANCEL))),
       // @ts-ignore
       catchError((err: any) => {
         endFailed(options);
@@ -145,7 +155,8 @@ export function getByOne<R>(
 
 export function getAll<R>(
   url: string,
-  state: StateObservable<StateType>,
+  action$: Observable<AppAction<any>>,
+  state: StateObservable<AccessAuthType>,
   options: HttpOptions = { showSpinner: true },
 ): any {
   return (action: any) => {
@@ -159,6 +170,8 @@ export function getAll<R>(
         endSuccess(options);
         return buildHttpResp<R>(result);
       }),
+      // cancel current request
+      takeUntil(action$.pipe(ofType(HttpEnum.CANCEL))),
       // @ts-ignore
       catchError((err: any) => {
         endFailed(options);

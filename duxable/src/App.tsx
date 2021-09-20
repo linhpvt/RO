@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
-import { TodoAction, TodoEnum } from './features/todo/reducer/todo.reducer';
+import { TodoEnum } from './features/todo/reducer/todo.reducer';
+import { AppAction } from './store';
 
 function App() {
   // @ts-ignore
   // const state = useSelector((state) => state);
-  const dispatch = useDispatch<Dispatch<TodoAction>>();
+  const dispatch = useDispatch<Dispatch<AppAction>>();
   useEffect(() => {
     dispatch({
       type: TodoEnum.ADD,

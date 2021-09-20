@@ -9,6 +9,7 @@ export const HttpEnum = {
   IN_PROCESS: `${NAMESPACE}/IN_PROCESS`,
   SUCCESS: `${NAMESPACE}/SUCCESS`,
   FAILED: `${NAMESPACE}/FAILED`,
+  CANCEL: `${NAMESPACE}/CANCEL`,
 };
 
 const initState = {
