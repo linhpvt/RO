@@ -7,17 +7,22 @@ import { TodoAction, TodoEnum } from './features/todo/reducer/todo.reducer';
 function App() {
   // @ts-ignore
   // const state = useSelector((state) => state);
-  const dispatch = useDispatch<TodoAction>();
+  const dispatch = useDispatch<Dispatch<TodoAction>>();
   useEffect(() => {
-    // @ts-ignore
     dispatch({
-      type: TodoEnum.TODO_ADD,
+      type: TodoEnum.ADD,
       payload: {
         name: 'Home',
         description: 'Do something before start',
         status: 'idea',
       },
     });
+    setTimeout(() => {
+      dispatch<any>({
+        type: TodoEnum.LIST,
+        payload: '',
+      });
+    }, 3000);
   }, [dispatch]);
   return (
     <div className='App'>

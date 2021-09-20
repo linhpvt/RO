@@ -26,4 +26,9 @@ if (ENV !== 'production' && module.hot) {
   module.hot.accept(rootReducer, () => store.replaceReducer(rootReducer));
 }
 
+// define some of interested piece of data in store
+export interface StateType {
+  user: any;
+}
+
 export default store;

@@ -1,13 +1,13 @@
+const NAMESPACE = 'USER';
 export interface UserAction {
   type: string;
   payload?: any;
 }
-
 export const UserEnum = {
-  USER_ADD: 'USER_ADD',
-  USER_ADD_SUCCESS: 'USER_ADD_SUCCESS',
-  USER_GET: 'USER_GET',
-  USER_GET_SUCCESS: 'USER_GET_SUCCESS',
+  ADD: `${NAMESPACE}/ADD`,
+  ADD_SUCCESS: `${NAMESPACE}/ADD_SUCCESS`,
+  GET: `${NAMESPACE}/GET`,
+  GET_SUCCESS: `${NAMESPACE}/GET_SUCCESS`,
 };
 
 export interface UserModel {
@@ -38,9 +38,9 @@ const initState = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state: UserState = initState, action: UserAction) => {
   switch (action.type) {
-    case UserEnum.USER_ADD_SUCCESS:
+    case UserEnum.ADD_SUCCESS:
       return { ...state, todo: action.payload };
-    case UserEnum.USER_GET_SUCCESS:
+    case UserEnum.GET_SUCCESS:
       return { ...state, list: action.payload };
     default:
       return state;

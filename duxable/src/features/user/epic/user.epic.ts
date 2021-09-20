@@ -4,18 +4,17 @@ import { Observable } from 'rxjs/internal/Observable';
 import { UserAction, UserEnum } from '../reducer/user.reducer';
 import { post, getAll } from '../../../services/http.service';
 
-const addUserEpic = (action$: Observable<UserAction>) =>
+const addUserEpic = (action$: Observable<UserAction>, state$: any) =>
   action$.pipe(
-    ofType(UserEnum.USER_ADD),
-    mergeMap(post('/users')),
-    map((todo) => ({ type: UserEnum.USER_ADD_SUCCESS, payload: todo })),
+    ofType(UserEnum.ADD),
+    mergeMap(post('/users', state$)),
+    map((todo) => ({ type: UserEnum.ADD_SUCCESS, payload: todo })),
   );
-const getUserListEpic = (action$: Observable<UserAction>) =>
+const getUserListEpic = (action$: Observable<UserAction>, state$: any) =>
   action$.pipe(
-    ofType(UserEnum.USER_GET),
-    mergeMap(getAll('/users')),
-    map((data: any) => data.response),
-    map((todo) => ({ type: UserEnum.USER_GET_SUCCESS, payload: todo })),
+    ofType(UserEnum.GET),
+    mergeMap(getAll('/users', state$)),
+    map((todos) => ({ type: UserEnum.GET_SUCCESS, payload: todos })),
   );
 
 const userEpics = [addUserEpic, getUserListEpic];

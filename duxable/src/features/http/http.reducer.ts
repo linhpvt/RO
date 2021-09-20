@@ -1,13 +1,14 @@
+const NAMESPACE = 'HTTP';
 export interface HttpAction {
   type: string;
   payload?: any;
 }
 
 export const HttpEnum = {
-  READY: 'READY',
-  IN_PROCESS: 'IN_PROCESS',
-  SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED',
+  READY: `${NAMESPACE}/READY`,
+  IN_PROCESS: `${NAMESPACE}/IN_PROCESS`,
+  SUCCESS: `${NAMESPACE}/SUCCESS`,
+  FAILED: `${NAMESPACE}/FAILED`,
 };
 
 const initState = {

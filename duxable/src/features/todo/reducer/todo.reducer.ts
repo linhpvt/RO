@@ -2,26 +2,30 @@ export interface TodoAction {
   type: string;
   payload?: any;
 }
-
+const NAMESPACE = 'TODO';
 export const TodoEnum = {
-  TODO_ADD: 'TODO_ADD',
-  TODO_ADD_SUCCESS: 'TODO_ADD_SUCCESS',
-  TODO_COMPLETE: 'TODO_COMPLETE',
-  TODO_COMPLETE_SUCCESS: 'TODO_COMPLETE_SUCCESS',
+  ADD: `${NAMESPACE}/ADD`,
+  ADD_SUCCESS: `${NAMESPACE}/ADD_SUCCESS`,
+  COMPLETE: `${NAMESPACE}/COMPLETE`,
+  COMPLETE_SUCCESS: `${NAMESPACE}/COMPLETE_SUCCESS`,
+  LIST: `${NAMESPACE}/LIST`,
+  LIST_SUCCESS: `${NAMESPACE}/LIST_SUCCESS`,
 };
 
 const todoInitialState = {
-  list: {},
-  status: {},
+  list: [],
+  item: {},
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state: any = todoInitialState, action: TodoAction) => {
   switch (action.type) {
-    case TodoEnum.TODO_ADD_SUCCESS:
-      return { ...state, todo: action.payload };
-    case TodoEnum.TODO_COMPLETE_SUCCESS:
+    case TodoEnum.ADD_SUCCESS:
+      return { ...state, item: action.payload };
+    case TodoEnum.COMPLETE_SUCCESS:
       return { ...state, status: action.payload };
+    case TodoEnum.LIST_SUCCESS:
+      return { ...state, list: action.payload };
     default:
       return state;
   }
